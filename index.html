@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JalanKita – Aksi Cepat Warga Surabaya</title>
+<style>
+:root{--navy:#0f4067;--sky:#4aa3e8;--sky2:#d6e9f8;--bg:#e8f1f9;--card:#f4f9fd;--ink:#14283b;--mute:#6b7f92;--red:#e53935;--org:#f59a1b;--grn:#1fb866;--hdr:linear-gradient(#bcd8f1,#d9ebf9);--line:#c4d8ea;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1824;--card:#14263a;--ink:#e6f0f9;--mute:#8ea5ba;--sky2:#1d3a57;--hdr:linear-gradient(#17324d,#12273b);--line:#27425c}}
+:root[data-theme="dark"]{--bg:#0c1824;--card:#14263a;--ink:#e6f0f9;--mute:#8ea5ba;--sky2:#1d3a57;--hdr:linear-gradient(#17324d,#12273b);--line:#27425c}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:#9fb8cc;font-family:"Nunito","Segoe UI",system-ui,sans-serif;color:var(--ink);display:flex;justify-content:center}
+.app{width:100%;max-width:430px;height:100%;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden}
+header{background:var(--hdr);padding:12px 14px 12px;border-radius:0 0 28px 28px;flex:none}
+.top{display:flex;align-items:center;gap:8px}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand b{font-size:19px;color:var(--navy)}.brand b span{color:var(--sky)}
+.brand small{display:block;font-size:10px;font-weight:700}
+.pts{margin-left:auto;background:var(--sky2);border-radius:14px;padding:4px 10px;font-weight:800;font-size:13px}
+.bell{background:none;border:0;font-size:20px;cursor:pointer}
+h1{font-size:15px;margin:10px 0 2px}h2{font-size:15px}
+.sub{font-size:11px;color:var(--mute);font-weight:700}
+.search{width:100%;margin-top:10px;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+.chips{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.chip{border:0;border-radius:14px;padding:6px 12px;font:inherit;font-size:12px;font-weight:800;background:var(--card);color:var(--ink);cursor:pointer;border:1px solid var(--line)}
+.chip.on{background:var(--sky);color:#fff;border-color:var(--sky)}
+main{flex:1;overflow-y:auto;padding:14px 14px 100px}
+nav{position:absolute;bottom:0;left:0;right:0;background:var(--card);display:flex;justify-content:space-around;align-items:flex-end;padding:6px 6px calc(8px + env(safe-area-inset-bottom,0px));border-radius:22px 22px 0 0;box-shadow:0 -4px 16px #0002}
+nav button{background:none;border:0;font:inherit;font-size:11px;font-weight:800;color:var(--mute);cursor:pointer;display:grid;gap:2px;justify-items:center;padding:4px 8px}
+nav button.on{color:var(--navy)}nav button i{font-style:normal;font-size:22px}
+nav .cam{width:66px;height:66px;border-radius:50%;background:var(--navy);color:#fff;font-size:30px;margin-top:-32px;border:5px solid var(--sky2);display:grid;place-items:center}
+.view{display:none}.view.on{display:block}
+.map{position:relative;height:430px;border-radius:18px;overflow:hidden;background:#dfe9e0;border:1px solid var(--line)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map .city{position:absolute;left:50%;top:30%;transform:translateX(-50%);font-weight:900;font-size:24px;color:#1b3550;opacity:.85}
+.pin{position:absolute;transform:translate(-50%,-100%);cursor:pointer;text-align:center}
+.pin .tag{background:#fff;border-radius:8px;padding:3px 6px;font-size:10px;font-weight:800;color:#222;border:2px solid;white-space:nowrap;box-shadow:0 2px 6px #0003}
+.pin .tag em{display:block;font-style:normal;font-size:9px;color:#fff;border-radius:4px;padding:0 4px;margin-top:2px}
+.pin .dot{width:14px;height:14px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);margin:2px auto 0}
+.pin.r .tag{border-color:var(--red)}.pin.r em,.pin.r .dot{background:var(--red)}
+.pin.s .tag{border-color:var(--org)}.pin.s em,.pin.s .dot{background:var(--org)}
+.pin.l .tag{border-color:var(--grn)}.pin.l em,.pin.l .dot{background:var(--grn)}
+.hero{height:170px;border-radius:20px;background:linear-gradient(135deg,#27567f,#4aa3e8 60%,#9fd0f3);position:relative;overflow:hidden;color:#fff;padding:16px;display:flex;flex-direction:column;justify-content:flex-end}
+.hero:before{content:"";position:absolute;right:-20px;bottom:0;width:160px;height:90px;background:#1c2b3a;border-radius:60px 60px 0 0;opacity:.5}
+.hero b{font-size:20px;position:relative}.hero span{font-size:12px;position:relative;font-weight:700}
+.stats{display:flex;justify-content:space-around;text-align:center;margin:14px 0}
+.stats b{font-size:22px;display:block}.stats small{font-size:12px;font-weight:800;color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.badge{border-radius:10px;padding:4px 10px;font-size:12px;font-weight:800}
+.b-red{background:#ffe1e0;color:var(--red)}.b-sky{background:var(--sky2);color:var(--navy)}.b-gold{background:#fff0c9;color:#a56a00}
+.bar{height:12px;background:var(--navy);border-radius:8px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--sky);transition:width .4s}
+.btn{border:0;border-radius:12px;padding:11px 16px;font:inherit;font-weight:800;font-size:14px;cursor:pointer;background:var(--sky);color:#fff;width:100%}
+.btn.ok{background:#bfecd2;color:#0b6b36}.btn.ghost{background:var(--sky2);color:var(--navy);width:auto}
+.cam-view{height:170px;border-radius:18px;background:var(--navy);position:relative;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;margin-top:10px}
+.cam-view:before,.cam-view:after{content:"+";position:absolute;font-size:60px;font-weight:200;opacity:.8}
+.cam-view span{position:absolute;top:10px;left:10px;background:#fff3;border-radius:8px;padding:4px 8px;font-size:12px}
+label.t{display:block;font-weight:800;margin:14px 0 6px;font-size:14px}
+.in{width:100%;padding:11px 12px;border-radius:12px;border:1.5px solid var(--navy);background:var(--card);color:var(--ink);font:inherit;font-size:13px}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opts button{border:0;border-radius:12px;padding:7px 12px;font:inherit;font-weight:800;font-size:12px;cursor:pointer;background:var(--sky);color:#fff}
+.opts.dk button{background:var(--navy)}.opts button.on{outline:3px solid var(--org)}
+.steps{display:flex;margin-top:10px}.steps div{flex:1;text-align:center;font-size:10px;font-weight:700;position:relative}
+.steps b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;margin:0 auto 3px;background:#000;color:#fff;font-size:12px;position:relative;z-index:1}
+.steps div:not(:last-child):after{content:"";position:absolute;top:10px;left:50%;width:100%;height:3px;background:var(--line)}
+.steps .d b{background:var(--grn)}.steps .c b{background:var(--sky)}.steps .d:not(:last-child):after{background:var(--grn)}
+.like{margin-top:10px;border:0;border-radius:12px;padding:8px 14px;font:inherit;font-weight:800;font-size:15px;background:var(--sky2);color:var(--navy);cursor:pointer}
+.like.on{background:var(--sky);color:#fff}
+.prof{background:var(--navy);color:#fff;border-radius:20px;padding:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.av{width:62px;height:62px;border-radius:50%;background:var(--sky);display:grid;place-items:center;font-weight:800;font-size:24px}
+.lv{background:#ffffff30;border-radius:12px;padding:3px 10px;font-size:12px;font-weight:800;display:inline-block;margin-top:4px}
+.prof .bar{background:#ffffff30;width:100%}
+.call{display:flex;align-items:center;gap:12px;border-radius:18px;padding:14px;margin-top:10px;background:linear-gradient(90deg,#7fc0f0,#a8d4f5);color:var(--navy);text-decoration:none}
+.call.d2{background:linear-gradient(90deg,#8fb4d6,#b5cfe6)}
+.call .ic{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:20px;flex:none}.call.d2 .ic{background:var(--navy)}
+.call b{display:block;font-size:15px}.call small{font-size:11px;font-weight:700}
+.call .go{margin-left:auto;background:var(--red);color:#fff;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:800}.call.d2 .go{background:var(--navy)}
+.misi{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;font-size:13px}
+.misi small{display:block;color:var(--mute);font-weight:700}
+.toast{position:absolute;left:50%;top:90px;transform:translate(-50%,-20px);background:var(--navy);color:#fff;padding:10px 16px;border-radius:14px;font-weight:800;font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:5}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:3px solid var(--org);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="top">
+    <div class="logo">JK</div>
+    <div class="brand"><b>Jalan<span>Kita</span></b><small>Aksi Cepat Warga Surabaya</small></div>
+    <div class="pts">⭐ <span id="pts">850</span> Pts</div>
+    <button class="bell" aria-label="Notifikasi" id="bell">🔔</button>
+  </div>
+  <div id="hd"></div>
+</header>
+
+<main>
+  <!-- PETA -->
+  <section class="view on" id="v-peta">
+    <div class="map" id="map">
+      <svg viewBox="0 0 400 430" preserveAspectRatio="none" aria-hidden="true">
+        <rect width="400" height="430" fill="#e4ebe3"/>
+        <path d="M0 300 Q120 260 230 300 T400 280" stroke="#fff" stroke-width="14" fill="none"/>
+        <path d="M180 0 L210 430" stroke="#fff" stroke-width="12"/>
+        <path d="M0 120 L400 160" stroke="#fff" stroke-width="9"/>
+        <path d="M0 380 L400 350" stroke="#f6d38a" stroke-width="10"/>
+        <path d="M80 0 L40 430M320 0 L350 430" stroke="#fff" stroke-width="6"/>
+        <rect x="20" y="170" width="70" height="60" rx="8" fill="#c9e3c6"/><rect x="290" y="190" width="80" height="70" rx="8" fill="#c9e3c6"/>
+      </svg>
+      <div class="city">Surabaya</div>
+    </div>
+    <p class="sub" style="margin-top:8px">Ketuk penanda untuk melihat detail kerusakan.</p>
+    <div class="card" id="pinInfo" hidden></div>
+  </section>
+
+  <!-- RELAWAN -->
+  <section class="view" id="v-relawan">
+    <div class="hero"><b>Relawan Jalan</b><span>Surabaya Bersama Kita Bisa</span></div>
+    <div class="stats">
+      <div><b style="color:var(--sky)">3 Aksi</b><small>Pekan ini</small></div>
+      <div><b style="color:var(--sky)">56</b><small>Relawan Terkonfirmasi</small></div>
+      <div><b style="color:var(--grn)">18</b><small>Titik Siap Dikerjakan</small></div>
+    </div>
+    <div class="row"><h2 style="color:var(--navy)">Agenda Gotong Royong Surabaya</h2><span class="sub" style="color:var(--sky)">3 Kegiatan</span></div>
+    <div class="card">
+      <div class="row"><div style="display:flex;gap:6px"><span class="badge b-sky">Rungkut</span><span class="badge b-red">Prioritas</span></div><span class="badge b-gold">⭐ +200 Pts</span></div>
+      <h2 style="margin:10px 0 8px">Aksi Tambal Cepat Gotong Royong Rungkut</h2>
+      <p class="sub">📅 Minggu, 28 September 2026 &nbsp; 🕕 06.30 - 09.30 WIB</p>
+      <p class="sub" style="margin-top:4px">📍 Jl. Rungkut Madya (Dekat UPN "Veteran" Jawa Timur)</p>
+      <div class="row" style="margin-top:12px"><b style="font-size:14px;color:var(--navy)">Kuota Relawan <span id="q">19</span>/25</b><b style="color:var(--sky)" id="qp">76%</b></div>
+      <div class="bar"><i id="qb" style="width:76%"></i></div>
+      <div class="row" style="margin-top:8px"><button class="btn ghost" id="detail">Detail Aksi</button><button class="btn" id="join" style="width:55%">Gabung Aksi</button></div>
+    </div>
+  </section>
+
+  <!-- LAPOR -->
+  <section class="view" id="v-lapor">
+    <div class="row"><div><h2 style="color:var(--navy)">Lapor Kerusakan Jalan</h2><p class="sub">Satgas Tanggap Cepat Pemkot &amp; Relawan Jatim</p></div><span class="badge b-sky">+50 Poin Warga</span></div>
+    <div class="cam-view"><span>📷 Kamera Siaga Jalan</span></div>
+    <label class="t" for="lok">Lokasi Kerusakan Jalan</label>
+    <input class="in" id="lok" placeholder="Jl. Raya Darmo, Wonokromo, Surabaya">
+    <div class="opts" id="kec" style="margin-top:10px"><button>Wonokromo</button><button>Gubeng</button><button>Rungkut</button><button>Tegalsari</button></div>
+    <label class="t">Lebar Lubang</label>
+    <div class="opts dk" id="lebar"><button>&lt;20 cm</button><button>20 - 45 cm</button><button>45 - 75 cm</button><button>&gt;75 cm</button></div>
+    <label class="t">Kedalaman Lubang</label>
+    <div class="opts dk" id="dalam"><button>&lt;2,5 cm</button><button>2,5 - 5 cm</button><button>&gt;5 cm</button><button>Tidak yakin</button></div>
+    <label class="t" for="cat">Catatan Kondisi Lapangan (Opsional)</label>
+    <textarea class="in" id="cat" rows="3"></textarea>
+    <button class="btn" id="kirim" style="margin-top:14px">➤ Kirim Laporan Kerusakan (+50poin)</button>
+  </section>
+
+  <!-- STATUS -->
+  <section class="view" id="v-status"><div id="list"></div></section>
+
+  <!-- PROFIL -->
+  <section class="view" id="v-profil">
+    <div class="prof">
+      <div class="av">CB</div>
+      <div><b style="font-size:18px">Cak Bambang Surabaya</b><div class="sub" style="color:#cfe3f4">Pahlawan Jalanan</div><span class="lv">🏆 Level 4 (Pahlawan Siaga)</span></div>
+      <div class="row" style="width:100%;font-size:11px;font-weight:800"><span>Poin Gotong Royong : <span id="pts2">850</span> Pts</span><span>Target Level 5: 1.000 Pts</span></div>
+      <div class="bar"><i id="pb" style="width:85%"></i></div>
+    </div>
+    <div class="stats" style="margin-bottom:6px">
+      <div><b id="nlap">7</b><small>Laporan Terkirim</small></div>
+      <div><b id="naksi">5</b><small>Aksi Relawan Diikuti</small></div>
+      <div><b>12</b><small>Titik Tuntas Diperbaiki</small></div>
+    </div>
+    <h2 style="color:var(--navy);margin-top:12px">Lencana Kontribusi Warga Surabaya</h2>
+    <div class="misi"><div>🛡️ <b>Mata Elang Surabaya</b><small>Melaporkan lebih dari 5 titik kerusakan jalan berlubang</small></div><span class="badge" style="background:#bfecd2;color:#0b6b36">Aktif</span></div>
+    <div class="misi"><div>🤝 <b>Relawan Sigap Aspal</b><small>Mengikuti minimal 3 aksi tambal cepat gotong royong</small></div><span class="badge" style="background:#bfecd2;color:#0b6b36">Aktif</span></div>
+    <h2 style="color:var(--navy);margin-top:18px">Kontak Darurat &amp; Satgas Jalan</h2>
+    <a class="call" href="tel:112"><span class="ic">📞</span><span><b>Command Center 112 Surabaya</b><small>Layanan gawat Darurat &amp; Kecelakaan 24 jam</small></span><span class="go">Panggil</span></a>
+    <a class="call d2" href="#" onclick="toast('Menghubungi Dinas PU Bina Marga…');return false"><span class="ic">📞</span><span><b>Dinas PU Bina Marga</b><small>Posko Penanganan Lubang Jalan Pemkot</small></span><span class="go">Hubungi</span></a>
+  </section>
+</main>
+
+<nav>
+  <button data-t="peta" class="on"><i>🗺️</i>Peta</button>
+  <button data-t="relawan"><i>🦺</i>Relawan</button>
+  <button data-t="lapor" class="cam" aria-label="Lapor kerusakan">📷</button>
+  <button data-t="status"><i>📋</i>Status</button>
+  <button data-t="profil"><i>👤</i>Profil</button>
+</nav>
+<div class="toast" id="toast"></div>
+</div>
+
+<script>
+var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+var pts=850,nlap=7,naksi=5,joined=false,quota=19,filterPeta="Semua",filterStat="Semua";
+var pins=[
+ {n:"Jl. Kenjeran",c:20,t:"s",x:44,y:19,st:"Sedang"},{n:"Jl. Raya Kebraon",c:18,t:"s",x:42,y:36,st:"Sedang"},
+ {n:"Jl. Raya Darmo",c:32,t:"r",x:12,y:36,st:"Bahaya"},{n:"Jl. Ahmad Yani",c:16,t:"s",x:36,y:53,st:"Sedang"},
+ {n:"Jl. Tol Surabaya - Mojokerto",c:40,t:"r",x:24,y:68,st:"Bahaya"},{n:"Jl. Raya Rajan",c:35,t:"r",x:50,y:76,st:"Bahaya"},
+ {n:"Jl. Menganggong",c:15,t:"s",x:12,y:86,st:"Sedang"},{n:"Jl. Raya Gunung Anyar",c:17,t:"s",x:80,y:80,st:"Sedang"},
+ {n:"Jl. Kertajaya",c:8,t:"l",x:80,y:26,st:"Ringan"},{n:"Jl. Ngagel",c:6,t:"l",x:82,y:54,st:"Ringan"}];
+var lap=[
+ {id:"JK-005",j:"Jl. Basuki Rahmat (Depan TP 4) (Tegalsari)",s:1,l:48,on:false},
+ {id:"JK-004",j:"Jl. Raya Darmo No.68 (Dekat taman Bungkul) (Wonokromo)",s:3,l:34,on:false}];
+var hd={
+ peta:'<h1>Selamat Datang!</h1><h2 style="font-size:20px;color:var(--navy)">Cak Bambang Surabaya</h2><input class="search" id="q1" placeholder="Cari jalan rusak di Surabaya……"><div class="chips" id="ch"><button class="chip on">Semua</button><button class="chip" style="color:var(--red)">Rusak Berat</button><button class="chip" style="color:#c97800">Rusak Sedang</button><button class="chip" style="color:#0b8a4a">Rusak Ringan</button></div>',
+ relawan:'',lapor:'',
+ status:'<div class="row" style="margin-top:8px"><div><h2 style="color:var(--navy)">Status Perbaikan Jalan</h2><p class="sub">Satgas Tanggap Cepat Pemkot &amp; Relawan Jatim</p></div><span class="badge b-sky" id="cnt"></span></div><input class="search" id="q2" placeholder="Cari Status jalan atau wilayah...."><div class="chips" id="ch2"><button class="chip on">Semua</button><button class="chip">Dalam Pengerjaan</button><button class="chip">Selesai</button><button class="chip">Laporan Saya</button></div>',
+ profil:''};
+var tab="peta";
+function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(function(){t.classList.remove("on")},2200)}
+function setTab(t){tab=t;$$("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.t===t)});
+ $$(".view").forEach(function(v){v.classList.toggle("on",v.id==="v-"+t)});
+ $("#hd").innerHTML=hd[t];$("main").scrollTop=0;
+ if(t==="peta"){bindPeta();drawPins()}if(t==="status"){bindStat();drawList()}}
+$$("nav button").forEach(function(b){b.onclick=function(){setTab(b.dataset.t)}});
+$("#bell").onclick=function(){toast("Belum ada notifikasi baru")};
+function drawPins(){var q=($("#q1")||{value:""}).value.toLowerCase();$$(".pin").forEach(function(e){e.remove()});
+ pins.forEach(function(p,i){
+  var lv=p.t==="r"?"Rusak Berat":p.t==="s"?"Rusak Sedang":"Rusak Ringan";
+  if(filterPeta!=="Semua"&&filterPeta!==lv)return;if(q&&p.n.toLowerCase().indexOf(q)<0)return;
+  var d=document.createElement("div");d.className="pin "+p.t;d.style.left=p.x+"%";d.style.top=p.y+"%";d.tabIndex=0;
+  d.innerHTML='<div class="tag">'+p.n+'<br>⚠ '+p.c+' cm<em>Status: '+p.st+'</em></div><div class="dot"></div>';
+  d.onclick=function(){var b=$("#pinInfo");b.hidden=false;b.innerHTML='<b>'+p.n+'</b><p class="sub">Lebar lubang '+p.c+' cm · Tingkat: '+lv+'</p><button class="btn" style="margin-top:10px" id="go">Lapor titik ini</button>';$("#go").onclick=function(){$("#lok").value=p.n+", Surabaya";setTab("lapor")}};
+  $("#map").appendChild(d)})}
+function bindPeta(){$("#q1").oninput=drawPins;$$("#ch .chip").forEach(function(c){c.onclick=function(){$$("#ch .chip").forEach(function(x){x.classList.remove("on")});c.classList.add("on");filterPeta=c.textContent;drawPins()}})}
+var sl=["Dilaporkan","Diverifikasi","Dalam Pengerjaan","Selesai"];
+function drawList(){var q=($("#q2")||{value:""}).value.toLowerCase();var n=0;var h="";
+ lap.forEach(function(r,i){
+  var st=sl[r.s-1];
+  if(filterStat==="Dalam Pengerjaan"&&r.s!==3)return;if(filterStat==="Selesai"&&r.s!==4)return;if(filterStat==="Laporan Saya"&&!r.mine)return;
+  if(q&&(r.j+st).toLowerCase().indexOf(q)<0)return;n++;
+  var pill=r.s===3?'<span class="badge b-gold">🚧 Dalam Pengerjaan</span>':'<span class="badge" style="border:1.5px solid var(--navy)">Dilaporkan</span>';
+  var sp=sl.map(function(s,k){return '<div class="'+(k+1<r.s?'d':k+1===r.s?'c':'')+'"><b>'+(k+1)+'</b>'+s+'</div>'}).join("");
+  h+='<div class="card"><div class="row"><span class="badge" style="border:1.5px solid var(--red);color:var(--red)">Kritis / Bahaya</span>'+pill+'<b class="sub">#'+r.id+'</b></div><h2 style="margin:10px 0 4px;color:var(--navy);font-size:17px">Jalan Berlubang</h2><p class="sub">📍 '+r.j+'</p><div class="steps">'+sp+'</div><button class="like'+(r.on?' on':'')+'" data-i="'+i+'">👍 '+r.l+' Dukungan</button></div>'});
+ $("#list").innerHTML=h||'<p class="sub" style="padding:20px;text-align:center">Belum ada laporan yang cocok. Coba kata kunci lain.</p>';
+ var c=$("#cnt");if(c)c.textContent=lap.length+" Laporan";
+ $$(".like").forEach(function(b){b.onclick=function(){var r=lap[b.dataset.i];r.on=!r.on;r.l+=r.on?1:-1;drawList()}})}
+function bindStat(){$("#q2").oninput=drawList;$$("#ch2 .chip").forEach(function(c){c.onclick=function(){$$("#ch2 .chip").forEach(function(x){x.classList.remove("on")});c.classList.add("on");filterStat=c.textContent;drawList()}})}
+function addPts(n){pts+=n;$("#pts").textContent=pts;$("#pts2").textContent=pts;$("#pb").style.width=Math.min(100,pts/10)+"%"}
+["kec","lebar","dalam"].forEach(function(id){$$("#"+id+" button").forEach(function(b){b.onclick=function(){$$("#"+id+" button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");if(id==="kec"&&!$("#lok").value)$("#lok").value="Kec. "+b.textContent+", Surabaya"}})});
+$("#kirim").onclick=function(){var l=$("#lok").value.trim(),w=$("#lebar .on"),d=$("#dalam .on");
+ if(!l||!w||!d){toast("Isi lokasi, lebar, dan kedalaman lubang dulu");return}
+ var k=$("#kec .on");lap.unshift({id:"JK-00"+(lap.length+6),j:l+(k?" ("+k.textContent+")":""),s:1,l:0,on:false,mine:true});
+ nlap++;$("#nlap").textContent=nlap;addPts(50);toast("Laporan terkirim! +50 poin");
+ $("#lok").value="";$("#cat").value="";$$(".opts .on").forEach(function(x){x.classList.remove("on")});setTimeout(function(){setTab("status")},700)};
+$("#join").onclick=function(){joined=!joined;quota+=joined?1:-1;$("#q").textContent=quota;var p=Math.round(quota/25*100);$("#qp").textContent=p+"%";$("#qb").style.width=p+"%";
+ this.className="btn"+(joined?" ok":"");this.textContent=joined?"✓ Sudah Bergabung":"Gabung Aksi";naksi+=joined?1:-1;$("#naksi").textContent=naksi;addPts(joined?200:-200);toast(joined?"Kamu bergabung! +200 poin":"Keikutsertaan dibatalkan")};
+$("#detail").onclick=function(){toast("Kumpul 06.30 WIB di Jl. Rungkut Madya. Bawa topi & air minum.")};
+setTab("peta");
+</script>
+</body>
+</html>
